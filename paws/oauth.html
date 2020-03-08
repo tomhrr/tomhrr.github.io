@@ -1,9 +1,30 @@
 <html>
 <head>
     <script type="text/javascript">
-        alert(window.location);
+	function getParameterByName(name) {
+	    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+	    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+	}
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var code = getParameterByName("code");
+            if (!code) {
+                document.getElementById("no-code").style = "display: block";
+            } else {
+                document.getElementById("code").innerHTML = code;
+                document.getElementById("has-code").style = "display: block";
+            }
+        });
     </script>
 </head>
 <body>
+    <h1>paws</h1>
+    <p id="has-code" style="display:none">
+        <p>Run the following command to generate the workspace token:</p>
+        <p><code>$ paws-register <span id="code"> </span></code></p>
+    </p>
+    <p id="no-code" style="display:none">
+        <p>The code could not be found in the URL.  Please try again.</p>
+    </p>
 </body>
 </html>
